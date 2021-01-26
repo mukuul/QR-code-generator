@@ -3,15 +3,21 @@ import React, { useState, useEffect } from 'react';
 import { Pressable, StyleSheet, Text, TextInput, View, Keyboard } from 'react-native';
 
 
-const CustomInputField = ({ placeHolder, setTouched, touched, touchedvalue }) => {
+const CustomInputField = ({ placeHolder, setTouched, touched, touchedvalue, setTextState, textState }) => {
   return (
     <Pressable onPressIn={() => setTouched(0)}
       onPressOut={() => setTouched(touchedvalue)}>
       {
-        touched === touchedvalue
-          ? <View style={[styles.boxStyle, touched && { borderWidth: 0.3, borderColor: "powderBlue", backgroundColor: "#f0f0f0" }]}>
+        touched === touchedvalue || textState[touchedvalue]
+          ? <View style={styles.boxStyle}>
             <Text style={styles.textStyle}> {placeHolder}</Text>
-            <TextInput style={styles.inputStyle} autoFocus={true} />
+            <TextInput
+              style={styles.inputStyle}
+              autoFocus={true}
+              onChangeText={value => {
+                setTextState[touchedvalue](value)
+              }}
+              value={textState[touchedvalue]} />
           </View>
           : <View style={styles.boxStyle}>
             <Text style={styles.defaultTextStyle}> {placeHolder} </Text>
@@ -21,7 +27,7 @@ const CustomInputField = ({ placeHolder, setTouched, touched, touchedvalue }) =>
   );
 }
 
-export default function App() {
+/*export default function App() {
   const [touched, setTouched] = useState(0);
 
   return (
@@ -39,11 +45,11 @@ export default function App() {
     </Pressable>
   );
 }
-
+*/
 const styles = StyleSheet.create({
   container: {
-    paddingVertical: 150,
-    backgroundColor: '#fff',
+    paddingVertical: 50,
+    backgroundColor: '#cccccc',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -54,7 +60,7 @@ const styles = StyleSheet.create({
     padding: 15,
     margin: 10,
     borderRadius: 15,
-    backgroundColor: '#cccccc'
+    backgroundColor: "#c0d0d0",
   },
 
   textStyle: {
@@ -72,4 +78,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default CustomInputField
+export default CustomInputField;

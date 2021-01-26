@@ -6,7 +6,8 @@ import { StyleSheet, Text, View, TextInput, Button } from 'react-native';
 const QR_Screen = ({ navigation }) => {
     const { string } = navigation.state.params;
     return (
-        <View>
+        <View style={styles.container}>
+            <Text style={styles.textStyle}>QR Code:</Text>
             <QRCode
                 size={200}
                 bgColor='#000000'
@@ -16,5 +17,17 @@ const QR_Screen = ({ navigation }) => {
         </View>
     )
 }
+const styles = StyleSheet.create({
+    container: {
+        alignItems: "center",
+        justifyContent: "space-evenly",
+        paddingTop: 100,
+    },
+    textStyle: {
+        fontSize: 17,
+        fontWeight: "bold",
+        paddingBottom: 25,
+    }
+})
 
 export default QR_Screen;
