@@ -3,7 +3,8 @@ import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, TextInput, Button } from 'react-native';
 
-const QR_Screen = ({ navigation, string }) => {
+const QR_Screen = ({ navigation }) => {
+    const { string } = navigation.state.params;
     return (
         <View>
             <QRCode
