@@ -1,11 +1,12 @@
-import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, TextInput, Button } from 'react-native';
+import { StyleSheet, Text, View, TextInput, Button, Pressable, Keyboard } from 'react-native';
+import CustomInputField from '../components/CustomInputField.js'
 
 const HomeScreen = ({ navigation }) => {
   const [name, setName] = useState("")
   const [bank, setBank] = useState("")
   const [ifsc, setIfsc] = useState("")
+  const [touched, setTouched] = useState(0);
 
   const displayQR = () => {
     if (name && bank && ifsc) {
@@ -17,67 +18,32 @@ const HomeScreen = ({ navigation }) => {
   }
 
   return (
-    <View style={styles.container}>
-      <View style={styles.wrap}>
-        <View style={styles.item}>
-          <Text style={styles.textStyle}>
-            Name:
-          </Text>
-          <TextInput
-            style={styles.textInputStyle}
-            placeholder="Enter Your Name"
-            onChangeText={value => {
-              setName(value)
-            }}
-            value={name}
-          />
-        </View>
-        <View style={styles.item}>
-          <Text style={styles.textStyle}>
-            Account Number:
-          </Text>
-          <TextInput
-            style={styles.textInputStyle}
-            placeholder="Enter Account Number"
-            onChangeText={value => {
+    <Pressable onPress={() => {
+      //setTouched(0)
+      Keyboard.dismiss();
 
-              setBank(value)
-            }}
-            value={bank}
-          />
-        </View>
-        <View style={styles.item}>
-          <Text style={styles.textStyle}>
-            IFSC Code:
-          </Text>
-          <TextInput
-            style={styles.textInputStyle}
-            placeholder="Enter IFSC Code"
-            onChangeText={value => {
-
-              setIfsc(value)
-            }}
-            value={ifsc}
-          />
-        </View>
+    }}>
+      <View style={styles.container}>
+        <CustomInputField placeHolder="Name" touched={touched} touchedvalue={1} setTouched={setTouched} setTextState={[null, setName, setBank, setIfsc]} textState={[null, name, bank, ifsc]} />
+        <CustomInputField placeHolder="Bank Account Number" touched={touched} touchedvalue={2} setTouched={setTouched} setTextState={[null, setName, setBank, setIfsc]} textState={[null, name, bank, ifsc]} />
+        <CustomInputField placeHolder="Ifsc Code" touched={touched} touchedvalue={3} setTouched={setTouched} setTextState={[null, setName, setBank, setIfsc]} textState={[null, name, bank, ifsc]} />
       </View>
-      <View
-        style={styles.button}>
+      <View style={styles.button}>
         <Button
           title="Generate QR Code"
           onPress={() => { displayQR() }}
         />
       </View>
-      <StatusBar style="auto" />
-    </View>
+    </Pressable>
   );
 }
 
+
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#fff',
+    paddingVertical: 50,
     alignItems: 'center',
-    justifyContent: "space-evenly",
+    justifyContent: 'center',
   },
 
   wrap: {
