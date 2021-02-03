@@ -13,16 +13,17 @@ const QR_Screen = ({ navigation }) => {
       <View style={styles.container}>
         <Text style={styles.textStyle}>QR Code:</Text>
             <QRCode
-                size={200}
+                size={250}
                 bgColor='#000000'
                 fgColor='#FFFFFF'
                 value={string}
             />
-            <Button
-              style={styles.buttonStyle} 
-              onPress={()=> { captureScreen({format: "jpg",quality: 0.8}).then(uri =>Share.open({url: uri}))}}
-              title="share"
+            <View style={styles.buttonStyle} >
+              <Button              
+                onPress={()=> { captureScreen({format: "jpg",quality: 0.8}).then(uri =>Share.open({url: uri}))}}
+                title="share"
               />
+            </View>
         </View>
     )
     
@@ -35,7 +36,7 @@ const styles = StyleSheet.create({
       paddingTop: 100,
   },
   textStyle: {
-      fontSize: 17,
+      fontSize: 27,
       fontWeight: "bold",
       paddingBottom: 25,
   },
