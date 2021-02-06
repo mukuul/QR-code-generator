@@ -1,7 +1,6 @@
-import QRCode from 'react-native-qrcode-generator';
 import React, { useState } from 'react';
-import {StyleSheet, Text, View, Image, TextInput, TouchableOpacity, Pressable, PermissionsAndroid } from 'react-native';
-import { captureScreen } from "react-native-view-shot";
+import {StyleSheet, Text, View, Image, TextInput, TouchableOpacity, Pressable, PermissionsAndroid, ToastAndroid } from 'react-native';
+import QRCode from 'react-native-qrcode-generator';
 import Share from 'react-native-share';
 import ImgToBase64 from 'react-native-image-base64';
 import RNFS from 'react-native-fs';
@@ -14,17 +13,20 @@ const QR_Screen = ({ navigation }) => {
       console.log(imageBase64.slice(0, 100))
       Share.open({url : imageBase64})
     }
+
     const downloadQR = () => {
       requestStoragePermission()
       .then(()=>{
-      var imageData = imageBase64.split("data:image/png;base64,")[1];
-      var path = RNFS.DownloadDirectoryPath + '/QRcode.png';
-      RNFS.writeFile(path, imageData, 'base64')
-      .then((success) => {
-      console.log('FILE WRITTEN! to' + path );
-        })
-      .catch((err) => {
-      console.log(err.message);
+        var fileName = Date.now();
+        var imageData = imageBase64.split("data:image/png;base64,")[1];
+        var path = RNFS.DownloadDirectoryPath + '/' + fileName + '.png';
+        RNFS.writeFile(path, imageData, 'base64')
+        .then((success) => {
+          ToastAndroid.show('Image saved to' + path , ToastAndroid.LONG);
+          console.log('FILE WRITTEN! to' + path );
+          })
+        .catch((err) => {
+          console.log(err.message);
       }); })
     }
   

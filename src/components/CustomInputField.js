@@ -4,7 +4,7 @@ import { Pressable, StyleSheet, Text, TextInput, View, Keyboard } from 'react-na
 
 const CustomInputField = ({ placeHolder, setTouched, touched, touchedvalue, setTextState, textState }) => {
   return (
-    <Pressable onPressIn={() => setTouched(0)}
+    <Pressable onPress={() => setTouched(0)}
       onPressOut={() => setTouched(touchedvalue)}>
       {
         touched === touchedvalue || textState[touchedvalue]
