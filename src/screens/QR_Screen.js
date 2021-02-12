@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {StyleSheet, Text, View, Image, TextInput, TouchableOpacity, Pressable, PermissionsAndroid, ToastAndroid } from 'react-native';
-import QRCode from 'react-native-qrcode-generator';
 import Share from 'react-native-share';
 import ImgToBase64 from 'react-native-image-base64';
 import RNFS from 'react-native-fs';
@@ -45,6 +44,14 @@ const QR_Screen = ({ navigation }) => {
       }
     };
     
+    let imageURI = `https://chart.googleapis.com/chart?chs=250x250&cht=qr&chl=${encodeURIComponent(string)}&choe=UTF-8`
+    
+    useEffect(() => {
+      ImgToBase64.getBase64String(imageURI)
+      .then(base64String => setImageBase64(`data:image/png;base64,${base64String}`))
+      .catch(err => doSomethingWith(err));
+    },[])
+
     return (
       <View>
         <View style={styles.shareContainer}>      
@@ -71,13 +78,10 @@ const QR_Screen = ({ navigation }) => {
       </View>
         <View style={styles.container}>
           <Text style={styles.textStyle}>QR Code:</Text>
-          <QRCode
-             style={styles.qrStyle}
-            size={250}
-            bgColor='#000000'
-            fgColor='#FFFFFF'
-            value={string}
-            getImageOnLoad={(base64)=> setImageBase64(base64)}
+          <Image
+            source={{uri : imageURI}}
+            style = {{height: 300, resizeMode : 'stretch', margin: 5, width: 300 }}
+    
           />    
          </View>    
       </View>

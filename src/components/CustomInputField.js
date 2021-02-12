@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Pressable, StyleSheet, Text, TextInput, View, Keyboard } from 'react-native';
 
 
-const CustomInputField = ({ placeHolder, setTouched, touched, touchedvalue, setTextState, textState }) => {
+const CustomInputField = ({ placeHolder, setTouched, touched, touchedvalue, setTextState, textState, keyboard }) => {
   return (
     <Pressable onPress={() => setTouched(0)}
       onPressOut={() => setTouched(touchedvalue)}>
@@ -13,6 +13,7 @@ const CustomInputField = ({ placeHolder, setTouched, touched, touchedvalue, setT
             <TextInput
               style={styles.inputStyle}
               autoFocus={true}
+              keyboardType={keyboard}
               onChangeText={value => {
                 setTextState[touchedvalue](value)
               }}
